@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Calendar Service - Create Calendar Shares
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 256
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+  SecretName:
+    Type: String
+    Description: Name of the Secrets Manager secret for DB credentials
+
+Resources:
+  CreateCalendarSharesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub createCalendarShares-${Environment}
+      Handler: dist/createCalendarShares.handler
+      CodeUri: ./
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SecretName
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${SecretName}*
+      Events:
+        CreateCalendarSharesApi:
+          Type: Api
+          Properties:
+            Path: /calendar-shares
+            Method: POST
+
+Outputs:
+  CreateCalendarSharesFunctionArn:
+    Description: ARN of the Create Calendar Shares Lambda function
+    Value: !GetAtt CreateCalendarSharesFunction.Arn
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/calendar-shares

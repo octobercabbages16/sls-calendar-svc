@@ -1,0 +1,15 @@
+{
+  "body": "{\"calendar_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"title\": \"Team Standup\", \"description\": \"Daily standup meeting\", \"location\": \"Zoom\", \"start_time\": \"2026-07-24T09:00:00Z\", \"end_time\": \"2026-07-24T09:30:00Z\", \"is_all_day\": false, \"status\": \"confirmed\", \"visibility\": \"default\"}",
+  "resource": "/events",
+  "path": "/events",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "requestContext": {
+    "resourcePath": "/events",
+    "httpMethod": "POST"
+  }
+}

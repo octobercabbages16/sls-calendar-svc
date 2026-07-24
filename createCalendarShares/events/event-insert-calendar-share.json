@@ -1,0 +1,15 @@
+{
+  "body": "{\"calendar_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"shared_with_user_id\": \"819b5540-e031-7020-ef23-967a0cbf1d7c\", \"permission\": \"write\"}",
+  "resource": "/calendar-shares",
+  "path": "/calendar-shares",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "requestContext": {
+    "resourcePath": "/calendar-shares",
+    "httpMethod": "POST"
+  }
+}

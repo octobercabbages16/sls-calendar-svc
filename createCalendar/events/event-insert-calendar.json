@@ -1,0 +1,15 @@
+{
+  "body": "{\"owner_id\": \"e18b4560-50c1-7015-beb3-09b499b14974\", \"name\": \"Work Calendar\", \"description\": \"My work events\", \"color\": \"#4285F4\", \"is_default\": true}",
+  "resource": "/calendars",
+  "path": "/calendars",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "requestContext": {
+    "resourcePath": "/calendars",
+    "httpMethod": "POST"
+  }
+}

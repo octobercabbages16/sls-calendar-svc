@@ -1,0 +1,15 @@
+{
+  "body": "{\"event_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"frequency\": \"weekly\", \"interval_value\": 1, \"by_day\": \"MO,WE,FR\", \"count\": 52}",
+  "resource": "/recurrence-rules",
+  "path": "/recurrence-rules",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "requestContext": {
+    "resourcePath": "/recurrence-rules",
+    "httpMethod": "POST"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "body": "{\"event_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"user_id\": \"e18b4560-50c1-7015-beb3-09b499b14974\", \"email\": \"tamitrostel@gmail.com\", \"display_name\": \"Tami Trostel\", \"rsvp_status\": \"accepted\", \"role\": \"attendee\"}",
+  "resource": "/event-attendees",
+  "path": "/event-attendees",
+  "httpMethod": "POST",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": null,
+  "requestContext": {
+    "resourcePath": "/event-attendees",
+    "httpMethod": "POST"
+  }
+}
