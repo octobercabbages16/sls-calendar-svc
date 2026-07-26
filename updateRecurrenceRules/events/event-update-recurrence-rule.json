@@ -1,0 +1,17 @@
+{
+  "body": "{\"frequency\": \"daily\", \"interval_value\": 2, \"by_day\": null, \"count\": 30}",
+  "resource": "/recurrence-rules/{id}",
+  "path": "/recurrence-rules/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "httpMethod": "PUT",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "requestContext": {
+    "resourcePath": "/recurrence-rules/{id}",
+    "httpMethod": "PUT"
+  }
+}

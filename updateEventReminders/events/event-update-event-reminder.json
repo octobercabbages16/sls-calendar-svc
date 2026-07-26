@@ -1,0 +1,17 @@
+{
+  "body": "{\"method\": \"email\", \"minutes_before\": 60}",
+  "resource": "/event-reminders/{id}",
+  "path": "/event-reminders/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "httpMethod": "PUT",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "requestContext": {
+    "resourcePath": "/event-reminders/{id}",
+    "httpMethod": "PUT"
+  }
+}

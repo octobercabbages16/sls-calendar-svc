@@ -1,0 +1,17 @@
+{
+  "body": "{\"rsvp_status\": \"declined\", \"role\": \"optional\"}",
+  "resource": "/event-attendees/{id}",
+  "path": "/event-attendees/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "httpMethod": "PUT",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "requestContext": {
+    "resourcePath": "/event-attendees/{id}",
+    "httpMethod": "PUT"
+  }
+}

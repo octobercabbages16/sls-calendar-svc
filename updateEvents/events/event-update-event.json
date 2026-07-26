@@ -1,0 +1,17 @@
+{
+  "body": "{\"title\": \"Updated Standup\", \"location\": \"Google Meet\", \"start_time\": \"2026-07-24T10:00:00Z\", \"end_time\": \"2026-07-24T10:30:00Z\"}",
+  "resource": "/events/{id}",
+  "path": "/events/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "httpMethod": "PUT",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "requestContext": {
+    "resourcePath": "/events/{id}",
+    "httpMethod": "PUT"
+  }
+}

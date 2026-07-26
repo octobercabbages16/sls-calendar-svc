@@ -1,0 +1,17 @@
+{
+  "body": "{\"permission\": \"admin\"}",
+  "resource": "/calendar-shares/{id}",
+  "path": "/calendar-shares/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "httpMethod": "PUT",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "requestContext": {
+    "resourcePath": "/calendar-shares/{id}",
+    "httpMethod": "PUT"
+  }
+}
