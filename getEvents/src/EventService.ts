@@ -28,67 +28,31 @@ export class EventService {
   }
 
   async processRequest(event: any) {
-    const calendarId = event.pathParameters?.calendar_id || event.queryStringParameters?.calendar_id;
     const eventId = event.pathParameters?.id || event.queryStringParameters?.id;
+    const calendarId = event.pathParameters?.calendar_id || event.queryStringParameters?.calendar_id;
 
-    // If an event ID is provided, get a single event
-    if (eventId) {
-      return this.getEventById(eventId);
+    if (!eventId && !calendarId) {
+      return {
+        statusCode: 400,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error: 'id or calendar_id is required' }),
+      };
     }
 
-    // If a calendar ID is provided, get all events for that calendar
-    if (calendarId) {
-      return this.getEventsByCalendar(calendarId);
-    }
-
-    return {
-      statusCode: 400,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ error: 'calendar_id or event id is required' }),
-    };
-  }
-
-  private async getEventById(eventId: string) {
     const db = await this.getDbConnection();
 
     try {
-      const eventRecord = await db('portal.events')
-        .where({ id: eventId })
-        .first();
+      const conditions: Record<string, any> = {};
+      if (eventId) conditions.id = eventId;
+      if (calendarId) conditions.calendar_id = calendarId;
 
-      if (!eventRecord) {
-        return {
-          statusCode: 404,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ error: 'Event not found' }),
-        };
-      }
-
-      return {
-        statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(eventRecord),
-      };
-    } catch (error) {
-      console.error('Error getting event:', error);
-
-      return {
-        statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Failed to get event' }),
-      };
-    } finally {
-      await db.destroy();
-    }
-  }
-
-  private async getEventsByCalendar(calendarId: string) {
-    const db = await this.getDbConnection();
-
-    try {
-      const events = await db('portal.events')
-        .where({ calendar_id: calendarId })
+      const query = db('portal.events')
+        .where(conditions)
         .orderBy('start_time', 'asc');
+
+      console.log('Query:', query.toString());
+
+      const events = await query;
 
       return {
         statusCode: 200,

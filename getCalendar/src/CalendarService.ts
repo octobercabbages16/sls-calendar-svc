@@ -29,34 +29,31 @@ export class CalendarService {
 
   async processRequest(event: any) {
     const calendarId = event.pathParameters?.id || event.queryStringParameters?.id;
+    const ownerId = event.pathParameters?.owner_id || event.queryStringParameters?.owner_id;
 
-    if (!calendarId) {
+    if (!calendarId && !ownerId) {
       return {
         statusCode: 400,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'calendar id is required' }),
+        body: JSON.stringify({ error: 'calendar id or owner_id is required' }),
       };
     }
 
     const db = await this.getDbConnection();
 
     try {
-      const calendar = await db('portal.calendars')
-        .where({ id: calendarId })
-        .first();
+      const conditions: Record<string, any> = {};
+      if (calendarId) conditions.id = calendarId;
+      if (ownerId) conditions.owner_id = ownerId;
 
-      if (!calendar) {
-        return {
-          statusCode: 404,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ error: 'Calendar not found' }),
-        };
-      }
+      const calendars = await db('portal.calendars')
+        .where(conditions)
+        .orderBy('created_at', 'asc');
 
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(calendar),
+        body: JSON.stringify(calendars),
       };
     } catch (error) {
       console.error('Error getting calendar:', error);

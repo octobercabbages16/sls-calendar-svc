@@ -7,7 +7,7 @@
   },
   "queryStringParameters": null,
   "pathParameters": {
-    "id": "61fbb288-1937-47b7-bf5e-a45e69a1e59e"
+    "owner_id": "e18b4560-50c1-7015-beb3-09b499b14974"
   },
   "requestContext": {
     "resourcePath": "/calendars/{id}",
