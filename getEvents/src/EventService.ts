@@ -28,8 +28,8 @@ export class EventService {
   }
 
   async processRequest(event: any) {
-    const calendarId = event.pathParameters?.calendar_id;
-    const eventId = event.pathParameters?.id;
+    const calendarId = event.pathParameters?.calendar_id || event.queryStringParameters?.calendar_id;
+    const eventId = event.pathParameters?.id || event.queryStringParameters?.id;
 
     // If an event ID is provided, get a single event
     if (eventId) {

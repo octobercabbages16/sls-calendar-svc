@@ -1,0 +1,13 @@
+version = 0.1
+
+[default.global.parameters]
+stack_name = "calendar-svc-api"
+region = "us-east-2"
+
+[default.deploy.parameters]
+confirm_changeset = false
+s3_bucket = "progress-report-services-bucket"
+capabilities = [ "CAPABILITY_IAM", "CAPABILITY_NAMED_IAM" ]
+
+  [default.deploy.parameters.parameter_overrides]
+  SECRETNAME = "dev/progress-report/portal_read"

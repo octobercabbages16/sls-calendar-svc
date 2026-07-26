@@ -4,7 +4,7 @@
   "description": "Lambda function to update recurrence rules",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke UpdateRecurrenceRules --env-vars env/dev.json --event events/event-update-recurrence-rule.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

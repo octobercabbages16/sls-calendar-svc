@@ -4,7 +4,7 @@
   "description": "Lambda function to create calendar shares",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke CreateCalendarSharesFunction --env-vars env/dev.json --event events/event-insert-calendar-share.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

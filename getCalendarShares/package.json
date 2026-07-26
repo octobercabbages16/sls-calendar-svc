@@ -4,7 +4,7 @@
   "description": "Lambda function to get calendar shares",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke GetCalendarShares --env-vars env/dev.json --event events/event-get-calendar-shares.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

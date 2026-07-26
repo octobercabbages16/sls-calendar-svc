@@ -28,7 +28,7 @@ export class CalendarService {
   }
 
   async processRequest(event: any) {
-    const calendarId = event.pathParameters?.id;
+    const calendarId = event.pathParameters?.id || event.queryStringParameters?.id;
 
     if (!calendarId) {
       return {

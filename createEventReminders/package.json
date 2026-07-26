@@ -4,7 +4,7 @@
   "description": "Lambda function to create event reminders",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke CreateEventRemindersFunction --env-vars env/dev.json --event events/event-insert-event-reminder.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

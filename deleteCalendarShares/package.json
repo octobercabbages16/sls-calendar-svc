@@ -4,7 +4,7 @@
   "description": "Lambda function to delete calendar shares",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke DeleteCalendarShares --env-vars env/dev.json --event events/event-delete-calendar-share.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

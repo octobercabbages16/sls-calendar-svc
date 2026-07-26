@@ -28,7 +28,7 @@ export class EventRemindersService {
   }
 
   async processRequest(event: any) {
-    const eventId = event.pathParameters?.event_id;
+    const eventId = event.pathParameters?.event_id || event.queryStringParameters?.event_id;
 
     if (!eventId) {
       return {

@@ -4,7 +4,7 @@
   "description": "Lambda function to update event attendees",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke UpdateEventAttendees --env-vars env/dev.json --event events/event-update-event-attendee.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

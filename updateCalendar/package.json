@@ -4,7 +4,7 @@
   "description": "Lambda function to update a calendar",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke UpdateCalendar --env-vars env/dev.json --event events/event-update-calendar.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -4,7 +4,7 @@
   "description": "Lambda function to delete events",
   "main": "index.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && sam build",
     "invoke": "sam local invoke DeleteEvents --env-vars env/dev.json --event events/event-delete-event.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
