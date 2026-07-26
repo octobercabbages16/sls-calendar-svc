@@ -1,0 +1,887 @@
+Transform: AWS::Serverless-2016-10-31
+Resources:
+  CalendarSvcApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: Calendar-Svc-Api
+      StageName: Prod
+      DefinitionBody:
+        openapi: '3.0'
+        info: {}
+        paths:
+          /calendars:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getCalendar.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createCalendar.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${updateCalendar.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteCalendar.Arn}/invocations
+              responses: {}
+          /events:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getEvents.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createEvents.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${updateEvents.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteEvents.Arn}/invocations
+              responses: {}
+          /recurrence-rules:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getRecurrenceRules.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createRecurrenceRules.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${updateRecurrenceRules.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteRecurrenceRules.Arn}/invocations
+              responses: {}
+          /event-attendees:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getAttendees.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createEventAttendees.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${updateEventAttendees.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteEventAttendees.Arn}/invocations
+              responses: {}
+          /event-reminders:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getEventReminders.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createEventReminders.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${updateEventReminders.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteEventReminders.Arn}/invocations
+              responses: {}
+          /calendar-shares:
+            get:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${getCalendarShares.Arn}/invocations
+              responses: {}
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${createCalendarShares.Arn}/invocations
+              responses: {}
+            put:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${updateCalendarShares.Arn}/invocations
+              responses: {}
+            delete:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws_proxy
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteCalendarShares.Arn}/invocations
+              responses: {}
+      EndpointConfiguration: REGIONAL
+      TracingEnabled: true
+      Cors:
+        AllowMethods: '''OPTIONS,GET,POST,DELETE,PUT'''
+        AllowHeaders: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
+        AllowOrigin: '''*'''
+        MaxAge: 5
+
+  # ==================== Calendars ====================
+
+  getCalendar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: getCalendar
+      CodeUri: getCalendar
+      Handler: dist/getCalendar.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiGETCalendars:
+          Type: Api
+          Properties:
+            Path: /calendars
+            Method: GET
+            RestApiId: !Ref CalendarSvcApi
+  createCalendar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: createCalendar
+      CodeUri: createCalendar
+      Handler: dist/createCalendar.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPOSTCalendars:
+          Type: Api
+          Properties:
+            Path: /calendars
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+  updateCalendar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: updateCalendar
+      CodeUri: updateCalendar
+      Handler: dist/updateCalendar.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPUTCalendars:
+          Type: Api
+          Properties:
+            Path: /calendars
+            Method: PUT
+            RestApiId: !Ref CalendarSvcApi
+  deleteCalendar:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: deleteCalendar
+      CodeUri: deleteCalendar
+      Handler: dist/deleteCalendar.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiDELETECalendars:
+          Type: Api
+          Properties:
+            Path: /calendars
+            Method: DELETE
+            RestApiId: !Ref CalendarSvcApi
+
+  # ==================== Events ====================
+
+  getEvents:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: getEvents
+      CodeUri: getEvents
+      Handler: dist/getEvents.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiGETEvents:
+          Type: Api
+          Properties:
+            Path: /events
+            Method: GET
+            RestApiId: !Ref CalendarSvcApi
+  createEvents:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: createEvents
+      CodeUri: createEvents
+      Handler: dist/createEvents.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPOSTEvents:
+          Type: Api
+          Properties:
+            Path: /events
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+  updateEvents:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: updateEvents
+      CodeUri: updateEvents
+      Handler: dist/updateEvents.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPUTEvents:
+          Type: Api
+          Properties:
+            Path: /events
+            Method: PUT
+            RestApiId: !Ref CalendarSvcApi
+  deleteEvents:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: deleteEvents
+      CodeUri: deleteEvents
+      Handler: dist/deleteEvents.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiDELETEEvents:
+          Type: Api
+          Properties:
+            Path: /events
+            Method: DELETE
+            RestApiId: !Ref CalendarSvcApi
+
+  # ==================== Recurrence Rules ====================
+
+  getRecurrenceRules:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: getRecurrenceRules
+      CodeUri: getRecurrenceRules
+      Handler: dist/getRecurrenceRules.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiGETRecurrenceRules:
+          Type: Api
+          Properties:
+            Path: /recurrence-rules
+            Method: GET
+            RestApiId: !Ref CalendarSvcApi
+  createRecurrenceRules:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: createRecurrenceRules
+      CodeUri: createRecurrenceRules
+      Handler: dist/createRecurrenceRules.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPOSTRecurrenceRules:
+          Type: Api
+          Properties:
+            Path: /recurrence-rules
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+  updateRecurrenceRules:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: updateRecurrenceRules
+      CodeUri: updateRecurrenceRules
+      Handler: dist/updateRecurrenceRules.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPUTRecurrenceRules:
+          Type: Api
+          Properties:
+            Path: /recurrence-rules
+            Method: PUT
+            RestApiId: !Ref CalendarSvcApi
+  deleteRecurrenceRules:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: deleteRecurrenceRules
+      CodeUri: deleteRecurrenceRules
+      Handler: dist/deleteRecurrenceRules.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiDELETERecurrenceRules:
+          Type: Api
+          Properties:
+            Path: /recurrence-rules
+            Method: DELETE
+            RestApiId: !Ref CalendarSvcApi
+
+  # ==================== Event Attendees ====================
+
+  getAttendees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: getAttendees
+      CodeUri: getAttendees
+      Handler: dist/getAttendees.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiGETEventAttendees:
+          Type: Api
+          Properties:
+            Path: /event-attendees
+            Method: GET
+            RestApiId: !Ref CalendarSvcApi
+  createEventAttendees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: createEventAttendees
+      CodeUri: createEventAttendees
+      Handler: dist/createEventAttendees.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPOSTEventAttendees:
+          Type: Api
+          Properties:
+            Path: /event-attendees
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+  updateEventAttendees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: updateEventAttendees
+      CodeUri: updateEventAttendees
+      Handler: dist/updateEventAttendees.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPUTEventAttendees:
+          Type: Api
+          Properties:
+            Path: /event-attendees
+            Method: PUT
+            RestApiId: !Ref CalendarSvcApi
+  deleteEventAttendees:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: deleteEventAttendees
+      CodeUri: deleteEventAttendees
+      Handler: dist/deleteEventAttendees.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiDELETEEventAttendees:
+          Type: Api
+          Properties:
+            Path: /event-attendees
+            Method: DELETE
+            RestApiId: !Ref CalendarSvcApi
+
+  # ==================== Event Reminders ====================
+
+  getEventReminders:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: getEventReminders
+      CodeUri: getEventReminders
+      Handler: dist/getEventReminders.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiGETEventReminders:
+          Type: Api
+          Properties:
+            Path: /event-reminders
+            Method: GET
+            RestApiId: !Ref CalendarSvcApi
+  createEventReminders:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: createEventReminders
+      CodeUri: createEventReminders
+      Handler: dist/createEventReminders.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPOSTEventReminders:
+          Type: Api
+          Properties:
+            Path: /event-reminders
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+  updateEventReminders:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: updateEventReminders
+      CodeUri: updateEventReminders
+      Handler: dist/updateEventReminders.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPUTEventReminders:
+          Type: Api
+          Properties:
+            Path: /event-reminders
+            Method: PUT
+            RestApiId: !Ref CalendarSvcApi
+  deleteEventReminders:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: deleteEventReminders
+      CodeUri: deleteEventReminders
+      Handler: dist/deleteEventReminders.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiDELETEEventReminders:
+          Type: Api
+          Properties:
+            Path: /event-reminders
+            Method: DELETE
+            RestApiId: !Ref CalendarSvcApi
+
+  # ==================== Calendar Shares ====================
+
+  getCalendarShares:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: getCalendarShares
+      CodeUri: getCalendarShares
+      Handler: dist/getCalendarShares.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiGETCalendarShares:
+          Type: Api
+          Properties:
+            Path: /calendar-shares
+            Method: GET
+            RestApiId: !Ref CalendarSvcApi
+  createCalendarShares:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: createCalendarShares
+      CodeUri: createCalendarShares
+      Handler: dist/createCalendarShares.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPOSTCalendarShares:
+          Type: Api
+          Properties:
+            Path: /calendar-shares
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+  updateCalendarShares:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: updateCalendarShares
+      CodeUri: updateCalendarShares
+      Handler: dist/updateCalendarShares.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiPUTCalendarShares:
+          Type: Api
+          Properties:
+            Path: /calendar-shares
+            Method: PUT
+            RestApiId: !Ref CalendarSvcApi
+  deleteCalendarShares:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: deleteCalendarShares
+      CodeUri: deleteCalendarShares
+      Handler: dist/deleteCalendarShares.handler
+      Runtime: nodejs22.x
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-0f7422ac76be43a01
+        SubnetIds:
+          - subnet-0c4a2f4169959769d
+          - subnet-0520bf7fed58d80fb
+      MemorySize: 3008
+      Timeout: 30
+      Tracing: Active
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SECRETNAME
+      Events:
+        CalendarSvcApiDELETECalendarShares:
+          Type: Api
+          Properties:
+            Path: /calendar-shares
+            Method: DELETE
+            RestApiId: !Ref CalendarSvcApi
+Parameters:
+  SECRETNAME:
+    Type: String
+    Description: Secret Name
+    Default: dev/progress-report/portal_read
