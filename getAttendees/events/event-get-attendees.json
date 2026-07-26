@@ -1,0 +1,16 @@
+{
+  "resource": "/events/{event_id}/attendees",
+  "path": "/events/a1b2c3d4-e5f6-7890-abcd-ef1234567890/attendees",
+  "httpMethod": "GET",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "event_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "requestContext": {
+    "resourcePath": "/events/{event_id}/attendees",
+    "httpMethod": "GET"
+  }
+}

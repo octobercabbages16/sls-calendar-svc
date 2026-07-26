@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
+    "invoke": "sam local invoke CreateCalendarFunction --env-vars env/env.json --event events/event-insert-calendar.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

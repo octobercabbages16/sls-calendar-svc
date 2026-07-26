@@ -1,0 +1,16 @@
+{
+  "resource": "/calendars/{id}",
+  "path": "/calendars/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "httpMethod": "GET",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "queryStringParameters": null,
+  "pathParameters": {
+    "id": "61fbb288-1937-47b7-bf5e-a45e69a1e59e"
+  },
+  "requestContext": {
+    "resourcePath": "/calendars/{id}",
+    "httpMethod": "GET"
+  }
+}

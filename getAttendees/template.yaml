@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Calendar Service - Get Attendees
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 256
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+  SecretName:
+    Type: String
+    Description: Name of the Secrets Manager secret for DB credentials
+
+Resources:
+  GetAttendees:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub getAttendees-${Environment}
+      Handler: dist/getAttendees.handler
+      CodeUri: ./
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SecretName
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${SecretName}*
+      Events:
+        GetAttendeesApi:
+          Type: Api
+          Properties:
+            Path: /events/{event_id}/attendees
+            Method: GET
+
+Outputs:
+  GetAttendeesFunctionArn:
+    Description: ARN of the Get Attendees Lambda function
+    Value: !GetAtt GetAttendees.Arn
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/events/{event_id}/attendees

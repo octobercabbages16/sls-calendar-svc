@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "build": "tsc",
+    "invoke": "sam local invoke CreateRecurrenceRulesFunction --env-vars env/dev.json --event events/event-insert-recurrence-rule.json --template template.yaml",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

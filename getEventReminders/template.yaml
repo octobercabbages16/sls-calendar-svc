@@ -1,0 +1,49 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Calendar Service - Get Event Reminders
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 256
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+  SecretName:
+    Type: String
+    Description: Name of the Secrets Manager secret for DB credentials
+
+Resources:
+  GetEventReminders:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub getEventReminders-${Environment}
+      Handler: dist/getEventReminders.handler
+      CodeUri: ./
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SecretName
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${SecretName}*
+      Events:
+        GetEventRemindersApi:
+          Type: Api
+          Properties:
+            Path: /events/{event_id}/reminders
+            Method: GET
+
+Outputs:
+  GetEventRemindersFunctionArn:
+    Description: ARN of the Get Event Reminders Lambda function
+    Value: !GetAtt GetEventReminders.Arn
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/events/{event_id}/reminders

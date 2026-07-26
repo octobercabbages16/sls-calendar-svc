@@ -1,0 +1,54 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Calendar Service - Get Events
+
+Globals:
+  Function:
+    Timeout: 30
+    Runtime: nodejs20.x
+    MemorySize: 256
+
+Parameters:
+  Environment:
+    Type: String
+    Default: dev
+    AllowedValues:
+      - dev
+      - staging
+      - prod
+  SecretName:
+    Type: String
+    Description: Name of the Secrets Manager secret for DB credentials
+
+Resources:
+  GetEvents:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub getEvents-${Environment}
+      Handler: dist/getEvents.handler
+      CodeUri: ./
+      Environment:
+        Variables:
+          SECRET_NAME: !Ref SecretName
+      Policies:
+        - AWSSecretsManagerGetSecretValuePolicy:
+            SecretArn: !Sub arn:aws:secretsmanager:${AWS::Region}:${AWS::AccountId}:secret:${SecretName}*
+      Events:
+        GetEventsByCalendar:
+          Type: Api
+          Properties:
+            Path: /calendars/{calendar_id}/events
+            Method: GET
+        GetEventById:
+          Type: Api
+          Properties:
+            Path: /events/{id}
+            Method: GET
+
+Outputs:
+  GetEventsFunctionArn:
+    Description: ARN of the Get Events Lambda function
+    Value: !GetAtt GetEvents.Arn
+  ApiEndpoint:
+    Description: API Gateway endpoint URL
+    Value: !Sub https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/events
