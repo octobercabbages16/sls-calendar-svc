@@ -1,0 +1,21 @@
+{
+  "name": "delete-event-attendees",
+  "version": "1.0.0",
+  "description": "Lambda function to delete event attendees",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "invoke": "sam local invoke DeleteEventAttendees --env-vars env/dev.json --event events/event-delete-event-attendee.json --template template.yaml",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "pg": "8.13.1",
+    "knex": "^2.1.0"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-secrets-manager": "3.650.0",
+    "@types/aws-lambda": "8.10.145",
+    "@types/pg": "8.11.10",
+    "typescript": "5.6.3"
+  }
+}
