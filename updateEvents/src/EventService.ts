@@ -2,6 +2,7 @@ import knex, { Knex } from 'knex';
 import { SecretSanta } from './SecretSanta';
 
 interface UpdateEventInput {
+  tutor_id?: string;
   title?: string;
   description?: string;
   location?: string;
@@ -39,7 +40,10 @@ export class EventService {
   }
 
   async processRequest(event: any) {
-    const eventId = event.pathParameters?.id;
+    const body: any =
+      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
+
+    const eventId = body.id;
 
     if (!eventId) {
       return {
@@ -49,11 +53,9 @@ export class EventService {
       };
     }
 
-    const body: UpdateEventInput =
-      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
-
     const updateFields: Record<string, any> = {};
 
+    if (body.tutor_id !== undefined) updateFields.tutor_id = body.tutor_id;
     if (body.title !== undefined) updateFields.title = body.title;
     if (body.description !== undefined) updateFields.description = body.description;
     if (body.location !== undefined) updateFields.location = body.location;

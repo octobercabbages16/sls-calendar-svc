@@ -28,7 +28,7 @@ export class EventService {
   }
 
   async processRequest(event: any) {
-    const eventId = event.pathParameters?.id;
+    const eventId = event.pathParameters?.id || event.queryStringParameters?.id;
 
     if (!eventId) {
       return {

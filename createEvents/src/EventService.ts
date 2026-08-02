@@ -4,6 +4,7 @@ import { SecretSanta } from './SecretSanta';
 
 interface CreateEventInput {
   calendar_id: string;
+  tutor_id: string;
   title: string;
   description?: string;
   location?: string;
@@ -44,7 +45,7 @@ export class EventService {
     const body: CreateEventInput =
       typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
 
-    const { calendar_id, title, description, location, start_time, end_time, is_all_day, status, visibility } = body;
+    const { calendar_id, tutor_id, title, description, location, start_time, end_time, is_all_day, status, visibility } = body;
 
     if (!calendar_id) {
       return {
@@ -80,6 +81,7 @@ export class EventService {
         .insert({
           id,
           calendar_id,
+          tutor_id,
           title,
           description: description || null,
           location: location || null,
@@ -94,7 +96,7 @@ export class EventService {
         .returning('*');
 
       return {
-        statusCode: 201,
+        statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(createdEvent),
       };

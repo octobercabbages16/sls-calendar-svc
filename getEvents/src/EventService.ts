@@ -30,12 +30,14 @@ export class EventService {
   async processRequest(event: any) {
     const eventId = event.pathParameters?.id || event.queryStringParameters?.id;
     const calendarId = event.pathParameters?.calendar_id || event.queryStringParameters?.calendar_id;
+    const tutorId = event.pathParameters?.tutor_id || event.queryStringParameters?.tutor_id;
+    const tenantId = event.pathParameters?.tenant_id || event.queryStringParameters?.tenant_id;
 
-    if (!eventId && !calendarId) {
+    if (!tenantId) {
       return {
         statusCode: 400,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'id or calendar_id is required' }),
+        body: JSON.stringify({ error: 'tenant_id is required' }),
       };
     }
 
@@ -43,8 +45,10 @@ export class EventService {
 
     try {
       const conditions: Record<string, any> = {};
+      conditions.tenant_id = tenantId;
       if (eventId) conditions.id = eventId;
       if (calendarId) conditions.calendar_id = calendarId;
+      if (tutorId) conditions.tutor_id = tutorId;
 
       const query = db('portal.events')
         .where(conditions)

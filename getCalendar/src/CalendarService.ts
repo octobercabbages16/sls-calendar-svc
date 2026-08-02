@@ -30,12 +30,13 @@ export class CalendarService {
   async processRequest(event: any) {
     const calendarId = event.pathParameters?.id || event.queryStringParameters?.id;
     const ownerId = event.pathParameters?.owner_id || event.queryStringParameters?.owner_id;
+    const tenantId = event.pathParameters?.tenant_id || event.queryStringParameters?.tenant_id;
 
-    if (!calendarId && !ownerId) {
+    if (!tenantId) {
       return {
         statusCode: 400,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'calendar id or owner_id is required' }),
+        body: JSON.stringify({ error: 'tenant_id is required' }),
       };
     }
 
@@ -43,6 +44,7 @@ export class CalendarService {
 
     try {
       const conditions: Record<string, any> = {};
+      conditions.tenant_id = tenantId;
       if (calendarId) conditions.id = calendarId;
       if (ownerId) conditions.owner_id = ownerId;
 
