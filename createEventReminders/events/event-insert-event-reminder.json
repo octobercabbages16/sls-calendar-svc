@@ -1,15 +1,8 @@
 {
-  "body": "{\"event_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"user_id\": \"e18b4560-50c1-7015-beb3-09b499b14974\", \"method\": \"email\", \"minutes_before\": 30}",
-  "resource": "/event-reminders",
-  "path": "/event-reminders",
-  "httpMethod": "POST",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "queryStringParameters": null,
-  "pathParameters": null,
-  "requestContext": {
-    "resourcePath": "/event-reminders",
-    "httpMethod": "POST"
+  "body": {
+    "event_id": "af11070c-059e-410e-9c88-0696ae640fcd",
+    "user_id": "758af6df-9c53-4962-be56-2e1e1755eb64",
+    "method": "email",
+    "minutes_before": 15
   }
 }

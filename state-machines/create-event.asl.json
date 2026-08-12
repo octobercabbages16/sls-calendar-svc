@@ -1,0 +1,126 @@
+{
+    "Comment": "Synchronous state machine to create a calendar event",
+    "StartAt": "CreateEvent",
+    "States": {
+        "CreateEvent": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "${CreateEventsFunctionArn}",
+                "Payload.$": "$"
+            },
+            "ResultPath": "$.createEventResult",
+            "ResultSelector": {
+                "statusCode.$": "$.Payload.statusCode",
+                "body.$": "$.Payload.body"
+            },
+            "Next": "CheckCreateEventResult"
+        },
+        "CheckCreateEventResult": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Variable": "$.createEventResult.statusCode",
+                    "NumericEquals": 200,
+                    "Next": "CheckRecurrenceType"
+                }
+            ],
+            "Default": "EventCreationFailed"
+        },
+        "CheckRecurrenceType": {
+            "Type": "Choice",
+            "Choices": [
+                {
+                    "Next": "GetAttendeesAccounts",
+                    "Variable": "$.type",
+                    "StringEquals": "SINGLE"
+                }
+            ],
+            "Default": "CreateRecurrenceRules"
+        },
+        "CreateRecurrenceRules": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "${CreateRecurrenceRulesFunctionArn}",
+                "Payload.$": "$"
+            },
+            "ResultPath": "$.createRecurrenceResult",
+            "ResultSelector": {
+                "statusCode.$": "$.Payload.statusCode",
+                "body.$": "$.Payload.body"
+            },
+            "Next": "GetAttendeesAccounts"
+        },
+        "GetAttendeesAccounts": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "arn:aws:lambda:us-east-2:242258465238:function:student-svc-api-getStudentContacts-SueTf9dKCImj",
+                "Payload": {
+                    "queryStringParameters": {
+                        "student_id.$": "$.attendee.student_id",
+                        "tenant_id.$": "$.attendee.tenant_id"
+                    }
+                }
+            },
+            "ResultPath": "$.getAttendeesAccountsResult",
+            "ResultSelector": {
+                "statusCode.$": "$.Payload.statusCode",
+                "body.$": "$.Payload.body"
+            },
+            "Next": "BuildAttendeePayload"
+        },
+        "BuildAttendeePayload": {
+            "Type": "Pass",
+            "Next": "CreateEventAttendees",
+            "Parameters": {
+                "body": {
+                    "event_id.$": "$.createEventResult.body.id",
+                    "student_id.$": "$.getAttendeesAccountsResult.body[0].student_id",
+                    "user_id.$": "$.getAttendeesAccountsResult.body[0].user_id",
+                    "email.$": "$.getAttendeesAccountsResult.body[0].email",
+                    "display_name.$": "$.getAttendeesAccountsResult.body[0].display_name",
+                    "rsvp_status": "accepted",
+                    "role": "attendee"
+                }
+            }
+        },
+        "CreateEventAttendees": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "${CreateEventAttendeesFunctionArn}",
+                "Payload.$": "$"
+            },
+            "ResultPath": "$.createAttendeesResult",
+            "ResultSelector": {
+                "statusCode.$": "$.Payload.statusCode",
+                "body.$": "$.Payload.body"
+            },
+            "Next": "CreateEventReminders"
+        },
+        "CreateEventReminders": {
+            "Type": "Task",
+            "Resource": "arn:aws:states:::lambda:invoke",
+            "Parameters": {
+                "FunctionName": "${CreateEventRemindersFunctionArn}",
+                "Payload.$": "$"
+            },
+            "ResultPath": "$.createRemindersResult",
+            "ResultSelector": {
+                "statusCode.$": "$.Payload.statusCode",
+                "body.$": "$.Payload.body"
+            },
+            "Next": "Success"
+        },
+        "Success": {
+            "Type": "Succeed"
+        },
+        "EventCreationFailed": {
+            "Type": "Fail",
+            "Error": "EventCreationFailed",
+            "Cause": "The event creation step returned a non-200 status code"
+        }
+    }
+}

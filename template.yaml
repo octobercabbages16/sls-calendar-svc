@@ -159,6 +159,25 @@ Resources:
                 type: aws_proxy
                 uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${deleteCalendarShares.Arn}/invocations
               responses: {}
+          /events/create:
+            post:
+              x-amazon-apigateway-integration:
+                httpMethod: POST
+                type: aws
+                uri: !Sub arn:${AWS::Partition}:apigateway:${AWS::Region}:states:action/StartSyncExecution
+                credentials: !Sub arn:aws:iam::${AWS::AccountId}:role/user-svc-stack-StateMachineRole-qpug4TehPpIw
+                requestTemplates:
+                  application/json: !Sub |
+                    {
+                      "input": "$util.escapeJavaScript($input.body)",
+                      "stateMachineArn": "${CreateEventStateMachine}"
+                    }
+                responses:
+                  "200":
+                    statusCode: "200"
+              responses:
+                "200":
+                  description: "Success"
       EndpointConfiguration: REGIONAL
       TracingEnabled: true
       Cors:
@@ -880,6 +899,34 @@ Resources:
             Path: /calendar-shares
             Method: DELETE
             RestApiId: !Ref CalendarSvcApi
+
+  # ==================== State Machines ====================
+
+  CreateEventStateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      DefinitionUri: state-machines/create-event.asl.json
+      Type: EXPRESS
+      DefinitionSubstitutions:
+        CreateEventsFunctionArn: !GetAtt createEvents.Arn
+        CreateRecurrenceRulesFunctionArn: !GetAtt createRecurrenceRules.Arn
+        CreateEventAttendeesFunctionArn: !GetAtt createEventAttendees.Arn
+        CreateEventRemindersFunctionArn: !GetAtt createEventReminders.Arn
+      Role: arn:aws:iam::242258465238:role/user-svc-stack-StateMachineRole-qpug4TehPpIw
+      Logging:
+        Level: ALL
+        IncludeExecutionData: true
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: arn:aws:logs:us-east-2:242258465238:log-group:/aws/vendedlogs/states/CreateEventStateMachine-5DDVSMyh6E4d-Logs:*
+      Events:
+        CreateEventApi:
+          Type: Api
+          Properties:
+            Path: /events/create
+            Method: POST
+            RestApiId: !Ref CalendarSvcApi
+
 Parameters:
   SECRETNAME:
     Type: String

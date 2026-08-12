@@ -1,15 +1,3 @@
 {
-  "body": "{\"calendar_id\": \"a1b2c3d4-e5f6-7890-abcd-ef1234567890\", \"title\": \"Team Standup\", \"description\": \"Daily standup meeting\", \"location\": \"Zoom\", \"start_time\": \"2026-07-24T09:00:00Z\", \"end_time\": \"2026-07-24T09:30:00Z\", \"is_all_day\": false, \"status\": \"confirmed\", \"visibility\": \"default\"}",
-  "resource": "/events",
-  "path": "/events",
-  "httpMethod": "POST",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "queryStringParameters": null,
-  "pathParameters": null,
-  "requestContext": {
-    "resourcePath": "/events",
-    "httpMethod": "POST"
-  }
+  "body": {"calendar_id":"61fbb288-1937-47b7-bf5e-a45e69a1e59e","title":"fdasfdsaf","start_time":"2026-08-09T07:00:00.000Z","end_time":"2026-08-09T07:30:00.000Z","is_all_day":false,"location":"dfdsafds","description":"dsafdsaf","status":"confirmed","visibility":"default","tutor_id":"30f707bd-5e38-404c-922f-14f809b8d7be","tenant_id":"f49cc9ef-0190-4e43-a030-01817c0cbfc4","type":"SINGLE"}
 }

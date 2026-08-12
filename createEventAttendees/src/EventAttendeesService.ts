@@ -1,11 +1,11 @@
 import knex, { Knex } from 'knex';
-import { v4 as uuidv4 } from 'uuid';
 import { SecretSanta } from './SecretSanta';
 
 interface CreateEventAttendeeInput {
   event_id: string;
+  student_id?: number;
   user_id?: string;
-  email: string;
+  email?: string;
   display_name?: string;
   rsvp_status?: string;
   role?: string;
@@ -38,24 +38,43 @@ export class EventAttendeesService {
   }
 
   async processRequest(event: any) {
-    const body: CreateEventAttendeeInput =
-      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
+    let body: CreateEventAttendeeInput;
 
-    const { event_id, user_id, email, display_name, rsvp_status, role } = body;
+    // If coming from state machine with attendee account data
+    if (event.getAttendeesAccountsResult && event.createEventResult) {
+      const createEventBody = typeof event.createEventResult.body === 'string'
+        ? JSON.parse(event.createEventResult.body)
+        : event.createEventResult.body;
+
+      const innerBody = typeof createEventBody.body === 'string'
+        ? JSON.parse(createEventBody.body)
+        : createEventBody;
+
+      const attendeesData = typeof event.getAttendeesAccountsResult.body === 'string'
+        ? JSON.parse(event.getAttendeesAccountsResult.body)
+        : event.getAttendeesAccountsResult.body;
+
+      const attendee = Array.isArray(attendeesData) ? attendeesData[0] : attendeesData;
+
+      body = {
+        event_id: innerBody.id,
+        user_id: attendee.user_id,
+        email: attendee.email,
+        display_name: attendee.display_name,
+        rsvp_status: 'confirmed',
+        role: 'attendee',
+      };
+    } else {
+      body = typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
+    }
+
+    const { event_id, student_id, user_id, email, display_name, rsvp_status, role } = body;
 
     if (!event_id) {
       return {
         statusCode: 400,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ error: 'event_id is required' }),
-      };
-    }
-
-    if (!email) {
-      return {
-        statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'email is required' }),
       };
     }
 
@@ -80,19 +99,20 @@ export class EventAttendeesService {
     const db = await this.getDbConnection();
 
     try {
-      const id = uuidv4();
       const now = new Date().toISOString();
+
+      console.log('Inserting attendee:', { event_id, student_id, user_id, email, display_name, rsvp_status, role });
 
       const [attendee] = await db('portal.event_attendees')
         .insert({
-          id,
           event_id,
+          student_id: student_id || null,
           user_id: user_id || null,
-          email,
+          email: email || null,
           display_name: display_name || null,
           rsvp_status: rsvp_status || 'needs_action',
           role: role || 'attendee',
-          created_at: now,
+          created_at: now
         })
         .returning('*');
 

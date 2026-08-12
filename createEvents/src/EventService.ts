@@ -1,10 +1,10 @@
 import knex, { Knex } from 'knex';
-import { v4 as uuidv4 } from 'uuid';
 import { SecretSanta } from './SecretSanta';
 
 interface CreateEventInput {
   calendar_id: string;
   tutor_id: string;
+  tenant_id: string;
   title: string;
   description?: string;
   location?: string;
@@ -45,43 +45,30 @@ export class EventService {
     const body: CreateEventInput =
       typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
 
-    const { calendar_id, tutor_id, title, description, location, start_time, end_time, is_all_day, status, visibility } = body;
+    const { calendar_id, tutor_id, tenant_id, title, description, location, start_time, end_time, is_all_day, status, visibility } = body;
 
     if (!calendar_id) {
-      return {
-        statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'calendar_id is required' }),
-      };
+      return { error: 'calendar_id is required' };
     }
 
     if (!title) {
-      return {
-        statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'title is required' }),
-      };
+      return { error: 'title is required' };
     }
 
     if (!start_time || !end_time) {
-      return {
-        statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'start_time and end_time are required' }),
-      };
+      return { error: 'start_time and end_time are required' };
     }
 
     const db = await this.getDbConnection();
 
     try {
-      const id = uuidv4();
       const now = new Date().toISOString();
 
       const [createdEvent] = await db('portal.events')
         .insert({
-          id,
           calendar_id,
           tutor_id,
+          tenant_id,
           title,
           description: description || null,
           location: location || null,
@@ -95,19 +82,11 @@ export class EventService {
         })
         .returning('*');
 
-      return {
-        statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(createdEvent),
-      };
+      return JSON.stringify(createdEvent);
     } catch (error) {
       console.error('Error creating event:', error);
 
-      return {
-        statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ error: 'Failed to create event' }),
-      };
+      return { error: 'Failed to create event' };
     } finally {
       await db.destroy();
     }

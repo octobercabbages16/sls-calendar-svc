@@ -50,7 +50,7 @@ export class EventService {
       if (calendarId) conditions.calendar_id = calendarId;
       if (tutorId) conditions.tutor_id = tutorId;
 
-      const query = db('portal.events')
+      const query = db('portal.events_view')
         .where(conditions)
         .orderBy('start_time', 'asc');
 

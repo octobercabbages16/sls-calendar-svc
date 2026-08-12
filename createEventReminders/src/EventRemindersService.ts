@@ -82,7 +82,7 @@ export class EventRemindersService {
         .returning('*');
 
       return {
-        statusCode: 201,
+        statusCode: 200,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reminder),
       };

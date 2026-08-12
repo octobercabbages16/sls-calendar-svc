@@ -1,16 +1,5 @@
 {
-  "resource": "/calendars/{calendar_id}/events",
-  "path": "/calendars/a1b2c3d4-e5f6-7890-abcd-ef1234567890/events",
-  "httpMethod": "GET",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "queryStringParameters": {"calendar_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"},
-  "pathParameters": {
-    "calendar_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-  },
-  "requestContext": {
-    "resourcePath": "/calendars/{calendar_id}/events",
-    "httpMethod": "GET"
+  "queryStringParameters": {
+    "tenant_id": "f49cc9ef-0190-4e43-a030-01817c0cbfc4"
   }
 }
