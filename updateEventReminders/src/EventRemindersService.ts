@@ -33,18 +33,22 @@ export class EventRemindersService {
   }
 
   async processRequest(event: any) {
-    const reminderId = event.pathParameters?.id;
+    const body: any =
+      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
+
+    const reminderId = body.id;
 
     if (!reminderId) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'reminder id is required' }),
       };
     }
-
-    const body: UpdateEventReminderInput =
-      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
 
     const updateFields: Record<string, any> = {};
 
@@ -54,7 +58,11 @@ export class EventRemindersService {
     if (Object.keys(updateFields).length === 0) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'At least one field to update is required' }),
       };
     }
@@ -63,7 +71,11 @@ export class EventRemindersService {
     if (body.method && !validMethods.includes(body.method)) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: `method must be one of: ${validMethods.join(', ')}` }),
       };
     }
@@ -79,14 +91,22 @@ export class EventRemindersService {
       if (!reminder) {
         return {
           statusCode: 404,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
           body: JSON.stringify({ error: 'Event reminder not found' }),
         };
       }
 
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+       headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify(reminder),
       };
     } catch (error) {
@@ -94,7 +114,11 @@ export class EventRemindersService {
 
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
+       headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'Failed to update event reminder' }),
       };
     } finally {

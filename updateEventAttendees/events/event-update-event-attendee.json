@@ -1,17 +1,11 @@
 {
-  "body": "{\"rsvp_status\": \"declined\", \"role\": \"optional\"}",
-  "resource": "/event-attendees/{id}",
-  "path": "/event-attendees/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "httpMethod": "PUT",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "queryStringParameters": null,
-  "pathParameters": {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-  },
-  "requestContext": {
-    "resourcePath": "/event-attendees/{id}",
-    "httpMethod": "PUT"
+  "body": {
+    "id": "f5d188df-b210-4dcd-8a74-8ac01cb94b46",
+    "event_id": "0cc91ce9-6963-4d58-a47c-3a3970fc631f",
+    "student_id": "4",
+    "email": "",
+    "display_name": "Joseph Hernandez",
+    "rsvp_status": "accepted",
+    "role": "attendee"
   }
 }

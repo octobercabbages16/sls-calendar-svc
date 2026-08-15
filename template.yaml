@@ -5,6 +5,11 @@ Resources:
     Properties:
       Name: Calendar-Svc-Api
       StageName: Prod
+      Auth:
+        DefaultAuthorizer: CalendarCustomAuthorizer
+        Authorizers:
+          CalendarCustomAuthorizer:
+            FunctionArn: !GetAtt calendarAuthorizer.Arn
       DefinitionBody:
         openapi: '3.0'
         info: {}
@@ -185,6 +190,22 @@ Resources:
         AllowHeaders: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
         AllowOrigin: '''*'''
         MaxAge: 5
+
+  # ==================== Authorizer ====================
+
+  calendarAuthorizer:
+    Type: AWS::Serverless::Function
+    Properties:
+      Role: arn:aws:iam::242258465238:role/aws-progress-report-lambda-db-access-Prod
+      Description: !Sub
+        - Stack ${AWS::StackName} Function ${ResourceName}
+        - ResourceName: calendarAuthorizer
+      CodeUri: calendarAuthorizer
+      Handler: dist/calendarAuthorizer.handler
+      Runtime: nodejs22.x
+      MemorySize: 256
+      Timeout: 10
+      Tracing: Active
 
   # ==================== Calendars ====================
 

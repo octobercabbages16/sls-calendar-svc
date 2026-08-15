@@ -36,7 +36,11 @@ export class EventService {
     if (!tenantId) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'tenant_id is required' }),
       };
     }
@@ -60,7 +64,11 @@ export class EventService {
 
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify(events),
       };
     } catch (error) {
@@ -68,7 +76,11 @@ export class EventService {
 
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'Failed to get events' }),
       };
     } finally {

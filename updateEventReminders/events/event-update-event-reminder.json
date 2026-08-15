@@ -1,17 +1,9 @@
 {
-  "body": "{\"method\": \"email\", \"minutes_before\": 60}",
-  "resource": "/event-reminders/{id}",
-  "path": "/event-reminders/a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-  "httpMethod": "PUT",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "queryStringParameters": null,
-  "pathParameters": {
-    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
-  },
-  "requestContext": {
-    "resourcePath": "/event-reminders/{id}",
-    "httpMethod": "PUT"
+  "body": {
+    "id": "a1b6f901-af2e-44e8-be2d-323d78f350ad",
+    "event_id": "0cc91ce9-6963-4d58-a47c-3a3970fc631f",
+    "user_id": "758af6df-9c53-4962-be56-2e1e1755eb64",
+    "method": "email",
+    "minutes_before": 30
   }
 }

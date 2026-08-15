@@ -34,21 +34,26 @@ export class EventAttendeesService {
   }
 
   async processRequest(event: any) {
-    const attendeeId = event.pathParameters?.id;
+    const body: any =
+      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
+
+    const attendeeId = body.id;
 
     if (!attendeeId) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'attendee id is required' }),
       };
     }
 
-    const body: UpdateEventAttendeeInput =
-      typeof event.body === 'string' ? JSON.parse(event.body) : event.body || event;
-
     const updateFields: Record<string, any> = {};
 
+    if (body.student_id !== undefined) updateFields.student_id = body.student_id;
     if (body.display_name !== undefined) updateFields.display_name = body.display_name;
     if (body.rsvp_status !== undefined) updateFields.rsvp_status = body.rsvp_status;
     if (body.role !== undefined) updateFields.role = body.role;
@@ -56,7 +61,11 @@ export class EventAttendeesService {
     if (Object.keys(updateFields).length === 0) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'At least one field to update is required' }),
       };
     }
@@ -65,7 +74,11 @@ export class EventAttendeesService {
     if (body.rsvp_status && !validRsvpStatuses.includes(body.rsvp_status)) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: `rsvp_status must be one of: ${validRsvpStatuses.join(', ')}` }),
       };
     }
@@ -74,7 +87,11 @@ export class EventAttendeesService {
     if (body.role && !validRoles.includes(body.role)) {
       return {
         statusCode: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: `role must be one of: ${validRoles.join(', ')}` }),
       };
     }
@@ -90,14 +107,22 @@ export class EventAttendeesService {
       if (!attendee) {
         return {
           statusCode: 404,
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
           body: JSON.stringify({ error: 'Event attendee not found' }),
         };
       }
 
       return {
         statusCode: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify(attendee),
       };
     } catch (error) {
@@ -105,7 +130,11 @@ export class EventAttendeesService {
 
       return {
         statusCode: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          "Access-Control-Allow-Headers" : "X-Requested-With,Content-Type",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
         body: JSON.stringify({ error: 'Failed to update event attendee' }),
       };
     } finally {
