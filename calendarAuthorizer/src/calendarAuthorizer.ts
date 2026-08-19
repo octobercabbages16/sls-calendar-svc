@@ -1,6 +1,12 @@
 export const handler = async (event: any, context: any) => {
   console.log('Authorizer event:', JSON.stringify(event, null, 2));
 
+  // Allow OPTIONS preflight requests through without authorization
+  const httpMethod = extractHttpMethod(event.methodArn);
+  if (httpMethod === 'OPTIONS') {
+    return generatePolicy('anonymous', 'Allow', event.methodArn);
+  }
+
   const token = event.authorizationToken || event.headers?.Authorization || event.headers?.authorization;
 
   if (!token) {
@@ -21,14 +27,22 @@ export const handler = async (event: any, context: any) => {
     const httpMethod = extractHttpMethod(event.methodArn);
 
     // Map groups to allowed methods
-    // calendar:read  -> GET
-    // calendar:write -> POST, PUT, DELETE
+    // calendar:view   -> GET
+    // calendar:create -> POST
+    // calendar:edit   -> PUT
+    // calendar:delete -> DELETE
     const allowedMethods: string[] = [];
-    if (groups.includes('calendar:read')) {
+    if (groups.includes('calendar:view')) {
       allowedMethods.push('GET');
     }
-    if (groups.includes('calendar:write')) {
-      allowedMethods.push('POST', 'PUT', 'DELETE');
+    if (groups.includes('calendar:create')) {
+      allowedMethods.push('POST');
+    }
+    if (groups.includes('calendar:edit')) {
+      allowedMethods.push('PUT');
+    }
+    if (groups.includes('calendar:delete')) {
+      allowedMethods.push('DELETE');
     }
 
     if (!httpMethod || allowedMethods.includes(httpMethod)) {
