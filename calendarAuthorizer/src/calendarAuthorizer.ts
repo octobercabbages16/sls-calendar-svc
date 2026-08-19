@@ -73,6 +73,10 @@ function generatePolicy(
   resource: string,
   context?: Record<string, string>
 ) {
+  // Use wildcard resource so the cached policy works across all endpoints
+  const arnParts = resource.split('/');
+  const wildcardResource = arnParts.slice(0, 2).join('/') + '/*';
+
   const policy: any = {
     principalId,
     policyDocument: {
@@ -81,7 +85,7 @@ function generatePolicy(
         {
           Action: 'execute-api:Invoke',
           Effect: effect,
-          Resource: resource,
+          Resource: wildcardResource,
         },
       ],
     },
